@@ -1,35 +1,33 @@
-28V DC Power Distribution System Modeling and Fault Detection
+28V DC Power Distribution Modeling and Fault Detection
 
 MATLAB / Simulink – Model-Based Design
 
-Overview
+Project Overview
 
-This project presents a model-based simulation of a 28V DC power distribution system commonly used in aircraft and heavy-duty electrical architectures.
-The system is modeled and analyzed in MATLAB/Simulink using Simscape, focusing on voltage stability, current behavior, and fault handling under different operating conditions.
+This repository contains a model-based simulation of a 28 V DC power distribution system developed in MATLAB/Simulink.
+The project focuses on analyzing voltage stability, current behavior, and fault response of the DC bus under different operating and fault conditions.
 
-The model allows early verification of power integrity and fault detection logic before real hardware testing.
+The model is intended for system-level analysis and validation prior to real hardware testing.
 
-System Architecture
+System Description
 
-The simulated system includes:
+The electrical system is modeled using Simscape Electrical and includes:
 
-28V DC power source
+28 V DC power source
 
 Source resistance and line inductance
 
-Load branches (normal load, heavy load)
+Normal and heavy load conditions
 
-Fault injection paths (short circuit, open circuit, ground fault)
+Fault paths for short circuit, open circuit, and ground fault
 
-Return path resistance
+Voltage and current sensing blocks
 
-Voltage and current sensors
+The architecture represents a simplified aircraft or heavy-duty DC power distribution system.
 
-The electrical network is implemented using Simscape Electrical, while measurement and logic blocks are implemented in Simulink.
+Fault Scenarios
 
-Fault Injection Scenarios
-
-The following fault conditions are simulated:
+The following scenarios are simulated and evaluated:
 
 Normal operation
 
@@ -39,43 +37,41 @@ Short circuit fault
 
 Open circuit fault
 
-Ground fault
+Ground fault condition
 
-Each scenario is activated based on a time schedule, allowing clear observation of transient and steady-state responses.
+Each scenario is activated based on a predefined time schedule to observe both transient and steady-state responses.
 
-Sensor and Measurement Chain
+Measurement Chain Modeling
 
-A realistic measurement chain is modeled to represent ECU-side sensing:
+A realistic ECU-side voltage measurement chain is implemented, including:
 
-Voltage sensing using a voltage divider
+Voltage divider
 
-ADC quantization (finite resolution)
+ADC quantization
 
-Noise and ripple injection
+Noise injection
 
-Low-pass filtering for signal conditioning
+Low-pass filtering
 
-This approach allows evaluation of how real measurement imperfections affect fault detection.
+This structure allows evaluation of how measurement imperfections affect fault detection reliability.
 
 Voltage Fault Detection Logic
 
 A voltage fault detection algorithm is implemented with:
 
-Undervoltage (UV) threshold: 22 V
+Undervoltage threshold: 22 V
 
-Overvoltage (OV) threshold: 29 V
+Overvoltage threshold: 29 V
 
-Hysteresis to prevent chattering
+Hysteresis to prevent fault chattering
 
 Debounce timers to avoid false triggering due to transients and noise
 
-The logic ensures stable and realistic fault detection behavior.
+The threshold values are selected according to MIL-STD-704F normal operating limits.
 
-Fault Classification
+Fault Classification and Management
 
-Based on measured voltage and current characteristics, the system classifies faults into:
-
-Normal operation
+Faults are classified using combined voltage and current information to distinguish between:
 
 Short circuit
 
@@ -83,76 +79,20 @@ Open circuit
 
 Ground fault
 
-This classification logic represents a simplified ECU diagnostic strategy.
+Normal operation
 
-Stateflow Fault Manager
-
-A Stateflow-based fault manager is implemented to:
-
-Handle fault priorities
-
-Control fault latching and recovery
-
-Manage transitions between fault states
-
-This structure reflects real-world embedded fault management architectures.
+A Stateflow-based fault manager is used to manage fault priorities, timing, and recovery behavior.
 
 Simulation Results
 
-Key results include:
+Simulation results include:
 
-DC bus voltage and current under each fault scenario
+DC bus voltage and current under all scenarios
 
-Measured voltage compared with MIL-STD-704F normal limits
+Measured voltage compared with MIL-STD-704F limits
 
-ADC-level voltage behavior
+UV and OV fault flags
 
-UV and OV detection flags
+Fault classification output
 
-Fault classification output over time
-
-The results show that the system correctly detects and classifies faults while remaining stable under normal conditions.
-
-Standards Reference
-
-The voltage limits and evaluation approach are aligned with:
-
-MIL-STD-704F (28V DC aircraft power systems)
-
-This project focuses on behavioral compliance and system understanding, not formal certification.
-
-Tools Used
-
-MATLAB
-
-Simulink
-
-Simscape Electrical
-
-Stateflow
-
-Conclusion
-
-This project demonstrates how model-based design can be used to analyze a 28V DC power distribution system, including fault behavior and diagnostic logic, before real hardware testing.
-
-The developed model provides a strong foundation for:
-
-ECU algorithm development
-
-Fault diagnostic validation
-
-Extension to Hardware-in-the-Loop (HIL) testing
-
-Integration with real embedded controllers
-
-Future Work
-
-Possible extensions include:
-
-Hardware-in-the-loop (HIL) implementation
-
-Real ECU communication (CAN-based diagnostics)
-
-Thermal effects and aging models
-
-EMI/EMC-focused disturbance modeling
+The results confirm stable fault detection behavior and correct classification under dynamic conditions.
